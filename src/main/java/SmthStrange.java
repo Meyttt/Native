@@ -1,5 +1,6 @@
 import javax.bluetooth.*;
 
+import java.io.IOException;
 import java.rmi.server.ExportException;
 
 /**
@@ -23,7 +24,14 @@ public class SmthStrange {
             }
 
             public void servicesDiscovered(int i, ServiceRecord[] serviceRecords) {
-
+                for(ServiceRecord record:serviceRecords){
+                    System.out.println("ID of service "+record.getAttributeIDs());
+                    try {
+                        System.out.println(record.getHostDevice().getFriendlyName(false));
+                    } catch (IOException e) {
+                        System.out.println(record.getHostDevice().getBluetoothAddress());
+                    }
+                }
             }
 
             public void serviceSearchCompleted(int i, int i1) {
