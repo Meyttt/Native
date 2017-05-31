@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,6 +27,15 @@ public class HandlerTest extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Handler test...");
         primaryStage.show();
+//        textArea.addEventHandler(javafx.scene.control.);
+        EventHandler<Event> handler = new EventHandler<Event>() {
+            public void handle(Event event) {
+                System.out.println(event);
+            }
+        };
+        scene.addEventHandler(Event.ANY,handler);
+
+
     }
 
     public static void main(String[] args) {

@@ -10,7 +10,22 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="bluecove" level="project" />
+    <orderEntry type="library" name="bluecove-gpl-2.1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="bluecove-emu-2.1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="bluecove-bluez-2.1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="bluecove-2.0.3-sources" level="project" />
+    <orderEntry type="library" name="bluecove-2.0.3-sources (2)" level="project" />
+    <orderEntry type="library" name="bluecove-2.0.3-sources" level="project" />
+    <orderEntry type="library" name="bluecove-2.0.3" level="project" />
+    <orderEntry type="library" name="bluecove" level="project" />
+    <orderEntry type="library" name="bluecove-2.0.3" level="application" />
+    <orderEntry type="library" name="bluecove-2.0.3 (2)" level="project" />
+    <orderEntry type="library" name="bluecove-tester" level="project" />
+    <orderEntry type="library" name="bluecove-2.0.3 (2)" level="project" />
+    <orderEntry type="library" name="bluecove-2.1.1" level="project" />
+    <orderEntry type="library" name="bluecove-2.1.1 (2)" level="project" />
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna-platform:4.1.0" level="project" />
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna:4.1.0" level="project" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.12" level="project" />
   </component>
 </module>
