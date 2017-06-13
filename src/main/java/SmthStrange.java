@@ -1,5 +1,7 @@
 import com.intel.bluetooth.btgoep.Connection;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.bluetooth.*;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
@@ -10,8 +12,7 @@ import javax.obex.Operation;
 import javax.obex.ResponseCodes;
 
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.rmi.server.ExportException;
 
 /**
@@ -27,10 +28,12 @@ public class SmthStrange {
             String name;
             try {
                 name=remoteDevice.getFriendlyName(false);
+
             }catch (Exception e){
                 name = remoteDevice.getBluetoothAddress();
             }
             System.out.println("device found: "+name );
+            System.out.println("addres: "+ remoteDevice.getBluetoothAddress());
         }
 
         public void servicesDiscovered(int i, ServiceRecord[] serviceRecords) {
@@ -116,15 +119,14 @@ public class SmthStrange {
             }
         }
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         UUID []uuid = new UUID[1];
         uuid[0]=new UUID(0x1105);
         int[] attrIDs = new int[]{0x0100};
         LocalDevice localDevice = LocalDevice.getLocalDevice();
         DiscoveryAgent agent = localDevice.getDiscoveryAgent();
-        agent.startInquiry(DiscoveryAgent.GIAC, new StrangeListener());
-
-        System.out.println();
+        StrangeListener listener = new StrangeListener();
+        agent.startInquiry(DiscoveryAgent.GIAC, listener);
         try {
             synchronized (lock){
                 lock.wait();
@@ -139,6 +141,7 @@ public class SmthStrange {
             if(!(device.getFriendlyName(false) ==null)){
                 if(device.getFriendlyName(false).contains("Z00LD")){
                     remoteDevice=device;
+                    agent.cancelInquiry(listener);
                 }
             }
         }
@@ -153,26 +156,38 @@ public class SmthStrange {
                 return;
             }
         }
-//        try {
-//            Class.forName("com.ibm.oti.connection.btgoep.Connection");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        Connection connection = new Connection();
-
-//        remoteDevice.authorize(new Connection());
-//        remoteDevice.authenticate();
+//        sendNewMessage(rUrl);
         javax.microedition.io.Connection connection=Connector.open(rUrl);
         remoteDevice.authenticate();
-//        StreamConnectionNotifier service =
-//                (StreamConnectionNotifier) Connector.open(rUrl);
-//
-//        StreamConnection connection =
-//                (StreamConnection) service.acceptAndOpen();
 
-        System.out.println(devices.length);
-
-        System.out.println("Device Inquiry Completed.");
+        while(true){
+            if (remoteDevice.isAuthenticated()) break;
+            else {
+                System.out.println(remoteDevice.isAuthenticated());
+                remoteDevice.authenticate();
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        Thread.sleep(30000);
+        connection.close();
+        sendNewMessage(rUrl);
+        System.out.println("services-2");
+        agent.searchServices(null, uuid,remoteDevice,new StrangeListener());
+//        }
+        int i=0;
+        while (true){
+            System.out.println("---->"+i+"<----");
+            i++;
+            agent.startInquiry(DiscoveryAgent.GIAC,listener);
+            Thread.sleep(10000);
+            System.out.println("-----------");
+            agent.cancelInquiry(listener);
+        }
+//        localDevice.
 
 
     }
@@ -197,4 +212,23 @@ public class SmthStrange {
         clientSession.disconnect(null);
         clientSession.close();
     }
+    private static String sendMessageCustom(String address12){
+        //todo: почему бы не испозовать сокеты из библиотек андроида?
+        String address = "";
+        for(int i=0; i<address12.length();){
+            address+=address12.charAt(i);
+            i++;
+            address+=address12.charAt(i);
+            i++;
+            address+=":";
+        }
+        return address;
+//        try {
+//            BluetoothSocket btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
+//        } catch (IOException e) {
+//            AlertBox("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
+//        }
+//        return null;
+    }
+
 }

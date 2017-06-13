@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewGraphics">
+   <children>
+      <ListView layoutX="22.0" layoutY="30.0" prefHeight="260.0" prefWidth="310.0" />
+      <Button layoutX="367.0" layoutY="30.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="195.0" text="Send" />
+      <Button layoutX="367.0" layoutY="131.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="195.0" text="Cancel" />
+      <Button layoutX="478.0" layoutY="230.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="85.0" text="Apply" />
+      <TextField layoutX="367.0" layoutY="231.0" prefHeight="59.0" prefWidth="85.0" text="Period..." />
+      <Button layoutX="477.0" layoutY="314.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="85.0" text="Exit" textAlignment="CENTER" />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="137.0" layoutY="302.0" prefHeight="59.0" prefWidth="195.0" text="Last update" textAlignment="RIGHT" />
+   </children>
+</AnchorPane>
