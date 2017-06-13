@@ -1,5 +1,6 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.text.Text;
 
 import javax.bluetooth.*;
 import javax.microedition.io.Connector;
@@ -185,22 +186,20 @@ public class SampleSPPClient implements DiscoveryListener {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        List<String> preList = new LinkedList<String>();
-
+        List<String> res = new LinkedList<String>();
         RemoteDevice[] devices = agent.retrieveDevices(0);
         for (RemoteDevice remoteDevice : devices) {
             String name = remoteDevice.getFriendlyName(false);
             if (!(name == null)) {
                 if (!(name.equals(""))) {
-                    preList.add("Name: " + name + "; address: " + remoteDevice.getBluetoothAddress());
+                   res.add("Name: " + name + "; address: " + remoteDevice.getBluetoothAddress());
                     continue;
                 }
             }
-            preList.add("Name:(no name); address: " + remoteDevice.getBluetoothAddress());
-
+            res.add("Name:(no name); address: " + remoteDevice.getBluetoothAddress());
         }
-        ObservableList<String> devList = FXCollections.observableArrayList(preList);
-        return devList;
+
+        return FXCollections.observableArrayList(res);
     }
 
     public static void main(String[] args) throws IOException {
@@ -208,7 +207,7 @@ public class SampleSPPClient implements DiscoveryListener {
         ObservableList<String> devices = sampleSPPClient.getDevicesList();
         NewGraphics newGraphics = new NewGraphics();
         newGraphics.launch(devices);
-
+//Runtime.getRuntime().exec("rundll32 user32.dll,LockWorkStation");
 
     }
 
